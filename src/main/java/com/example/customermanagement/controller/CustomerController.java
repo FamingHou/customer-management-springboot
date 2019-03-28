@@ -27,7 +27,6 @@ public class CustomerController {
 
     @GetMapping("/customers")
     public Result<List<Customer>> getAllCustomers(SortCriteria criteria) {
-        
         return new Result<List<Customer>>(true, customerService.findAll(criteria));
     }
 //

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
@@ -19,14 +20,13 @@ public interface CustomerMapper {
             @Result(property = "emailId", column = "email_address"),
             @Result(property = "createdTime", column = "created_time"), })
 
-    @Select("select * from customer order by id asc")
-    List<Customer> findAll(SortCriteria criteria);
+    @Select("select * from customer order by ${sc.sortColumn} ${sc.sortDirection}") // ${} instead of #{}
+    List<Customer> findAll(@Param("sc") SortCriteria sc);
 
     @Select("select * from customer where email_address=#{emailId}")
     Customer findByEmailId(Customer c);
-    
+
     @Insert("insert into customer(first_name, last_name, email_address, created_time) values(#{firstName}, #{lastName}, #{emailId}, #{createdTime} )")
     void insert(Customer customer);
 
-    
 }

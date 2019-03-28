@@ -16,8 +16,8 @@ public class CustomerServiceImpl implements CustomerService {
     private CustomerMapper customerMapper;
 
     @Override
-    public List<Customer> findAll(SortCriteria criteria) {
-        return customerMapper.findAll(criteria);
+    public List<Customer> findAll(SortCriteria sortCriteria) {
+        return customerMapper.findAll(sortCriteria);
     }
     
     @Override
