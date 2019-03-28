@@ -17,6 +17,8 @@ public interface CustomerService {
 
     void insert(Customer customer) throws ValidationException;
 
+    void updateStatus(Long id, String status);
+
 //    void delete(Customer customer);
 
 }

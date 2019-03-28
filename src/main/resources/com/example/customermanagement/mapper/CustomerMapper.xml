@@ -18,19 +18,20 @@
 		<result property="lastName" column="last_name" />
 		<result property="emailId" column="email_address" />
 		<result property="createdTime" column="created_time" />
+		<result property="status" column="status" />
 	</resultMap>
 
 	<select id="findByColumns" resultMap="customerResultMap">
 		select *
 		from customer where 1=1
 		<if test="c.firstName != null and c.firstName !=''">
-			and first_name=#{c.firstName} 
+			and first_name=#{c.firstName}
 		</if>
 		<if test="c.lastName != null and c.lastName !=''">
-			and last_name=#{c.lastName} 
+			and last_name=#{c.lastName}
 		</if>
 		<if test="c.emailId != null and c.emailId !=''">
-			and email_address=#{c.emailId} 
+			and email_address=#{c.emailId}
 		</if>
 		order by ${sc.sortColumn} ${sc.sortDirection}
 	</select>
@@ -38,7 +39,14 @@
 	<select id="findAll" resultMap="customerResultMap">
 		select *
 		from customer
-		order by ${sc.sortColumn} ${sc.sortDirection}
+		order by
+		${sc.sortColumn} ${sc.sortDirection}
 	</select>
+
+	<update id="updateStatus">
+		update customer set
+		status = #{status}
+		where id = #{id}
+	</update>
 
 </mapper>

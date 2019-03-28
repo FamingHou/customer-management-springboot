@@ -31,17 +31,15 @@ public class CustomerController {
         return new Result<List<Customer>>(true, customerService.findAll(criteria));
     }
     
-    /**
-     * 
-     * @param customer search conditions
-     * @param sortCriteria order by criteria
-     * @return
-     */
     @GetMapping("/customers/conditions")
     public Result<List<Customer>> getAllCustomersByColumns(Customer customer, SortCriteria sortCriteria) {
         return new Result<List<Customer>>(true, customerService.findByColumns(customer, sortCriteria));
     }
     
+    @PostMapping("/customers/updatestatus")
+    public void updateStatus(@Valid @RequestBody Customer customer) {
+        customerService.updateStatus(customer.getId(), customer.getStatus());
+    }
 
 //    @GetMapping("/customers/{id}")
 //    public Customer getCustomerById(@PathVariable(value = "id") Long customerId)

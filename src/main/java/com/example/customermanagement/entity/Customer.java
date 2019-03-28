@@ -1,6 +1,10 @@
 package com.example.customermanagement.entity;
 
-public class Customer {
+import java.io.Serializable;
+
+public class Customer implements Serializable{
+
+    private static final long serialVersionUID = 1L;
 
     private long id;
 
@@ -11,6 +15,8 @@ public class Customer {
     private String emailId;
 
     private long createdTime;
+
+    private String status;
 
     public Customer() {
 
@@ -63,10 +69,18 @@ public class Customer {
         this.createdTime = createdTime;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     @Override
     public String toString() {
         return "Customer [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", emailId=" + emailId
-                + ", createdTime=" + createdTime + "]";
+                + ", createdTime=" + createdTime + ", status=" + status + "]";
     }
 
 }

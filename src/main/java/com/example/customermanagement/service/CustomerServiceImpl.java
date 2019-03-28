@@ -35,6 +35,11 @@ public class CustomerServiceImpl implements CustomerService {
         customerMapper.insert(customer);
     }
 
+    @Override
+    public void updateStatus(Long id, String status) {
+        customerMapper.updateStatus(id, status);        
+    }
+
     
 //
 //    @Override
