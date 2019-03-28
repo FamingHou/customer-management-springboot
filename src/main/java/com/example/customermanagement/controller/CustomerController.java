@@ -36,49 +36,49 @@ public class CustomerController {
         
         return new Result<List<Customer>>(true, customerService.findAll(criteria));
     }
-
-    @GetMapping("/customers/{id}")
-    public Customer getCustomerById(@PathVariable(value = "id") Long customerId)
-            throws ResourceNotFoundException {
-        return customerService.findById(customerId);
-    }
-
-    @PostMapping("/customers")
-    public Result createCustomer(@Valid @RequestBody Customer customer) {
-        try {
-            return new Result<Customer>(true, customerService.save(customer));
-        } catch (ValidationException e) {
-            return new Result<String>(false, e.getMessage());
-        }
-    }
-
-    @PutMapping("/customers/{id}")
-    public Result updateCustomer(@PathVariable(value = "id") Long customerId,
-            @Valid @RequestBody Customer customerDetails) throws ResourceNotFoundException {
-        Customer customer = customerService.findById(customerId);
-
-        customer.setEmailId(customerDetails.getEmailId());
-        customer.setLastName(customerDetails.getLastName());
-        customer.setFirstName(customerDetails.getFirstName());
-        Customer updatedCustomer;
-        try {
-            updatedCustomer = customerService.save(customer);
-            return new Result<Customer>(true, updatedCustomer);
-        } catch (ValidationException e) {
-            return new Result<String>(false, "Duplicated email address.");
-        }
-
-    }
-
-    @DeleteMapping("/customers/{id}")
-    public Map<String, Boolean> deleteCustomer(@PathVariable(value = "id") Long customerId)
-            throws ResourceNotFoundException {
-        Customer customer = customerService.findById(customerId);
-
-        customerService.delete(customer);
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("deleted", Boolean.TRUE);
-        return response;
-    }
+//
+//    @GetMapping("/customers/{id}")
+//    public Customer getCustomerById(@PathVariable(value = "id") Long customerId)
+//            throws ResourceNotFoundException {
+//        return customerService.findById(customerId);
+//    }
+//
+//    @PostMapping("/customers")
+//    public Result createCustomer(@Valid @RequestBody Customer customer) {
+//        try {
+//            return new Result<Customer>(true, customerService.save(customer));
+//        } catch (ValidationException e) {
+//            return new Result<String>(false, e.getMessage());
+//        }
+//    }
+//
+//    @PutMapping("/customers/{id}")
+//    public Result updateCustomer(@PathVariable(value = "id") Long customerId,
+//            @Valid @RequestBody Customer customerDetails) throws ResourceNotFoundException {
+//        Customer customer = customerService.findById(customerId);
+//
+//        customer.setEmailId(customerDetails.getEmailId());
+//        customer.setLastName(customerDetails.getLastName());
+//        customer.setFirstName(customerDetails.getFirstName());
+//        Customer updatedCustomer;
+//        try {
+//            updatedCustomer = customerService.save(customer);
+//            return new Result<Customer>(true, updatedCustomer);
+//        } catch (ValidationException e) {
+//            return new Result<String>(false, "Duplicated email address.");
+//        }
+//
+//    }
+//
+//    @DeleteMapping("/customers/{id}")
+//    public Map<String, Boolean> deleteCustomer(@PathVariable(value = "id") Long customerId)
+//            throws ResourceNotFoundException {
+//        Customer customer = customerService.findById(customerId);
+//
+//        customerService.delete(customer);
+//        Map<String, Boolean> response = new HashMap<>();
+//        response.put("deleted", Boolean.TRUE);
+//        return response;
+//    }
 
 }
