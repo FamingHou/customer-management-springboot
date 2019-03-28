@@ -22,6 +22,7 @@ import com.example.customermanagement.service.CustomerService;
 @RestController
 @RequestMapping("/api/v1")
 public class CustomerController {
+    
     @Autowired
     private CustomerService customerService;
 
@@ -29,7 +30,19 @@ public class CustomerController {
     public Result<List<Customer>> getAllCustomers(SortCriteria criteria) {
         return new Result<List<Customer>>(true, customerService.findAll(criteria));
     }
-//
+    
+    /**
+     * 
+     * @param customer search conditions
+     * @param sortCriteria order by criteria
+     * @return
+     */
+    @GetMapping("/customers/columns")
+    public Result<List<Customer>> getAllCustomersByColumns(Customer customer, SortCriteria sortCriteria) {
+        return new Result<List<Customer>>(true, customerService.findByColumns(customer, sortCriteria));
+    }
+    
+
 //    @GetMapping("/customers/{id}")
 //    public Customer getCustomerById(@PathVariable(value = "id") Long customerId)
 //            throws ResourceNotFoundException {

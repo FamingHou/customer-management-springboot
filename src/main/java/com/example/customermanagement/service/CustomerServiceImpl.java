@@ -19,16 +19,23 @@ public class CustomerServiceImpl implements CustomerService {
     public List<Customer> findAll(SortCriteria sortCriteria) {
         return customerMapper.findAll(sortCriteria);
     }
-    
+
+    @Override
+    public List<Customer> findByColumns(Customer customer, SortCriteria sortCriteria) {
+        return customerMapper.findByColumns(customer, sortCriteria);
+    }
+
     @Override
     public void insert(Customer customer) throws ValidationException {
-      Customer found = customerMapper.findByEmailId(customer);
-      if (found != null) {
-          throw new ValidationException("This email address has already been registered.");
-      }
-      customer.setCreatedTime(System.currentTimeMillis()); // Unix Timestamp in milliseconds
-      customerMapper.insert(customer);
+        Customer found = customerMapper.findByEmailId(customer);
+        if (found != null) {
+            throw new ValidationException("This email address has already been registered.");
+        }
+        customer.setCreatedTime(System.currentTimeMillis()); // Unix Timestamp in milliseconds
+        customerMapper.insert(customer);
     }
+
+    
 //
 //    @Override
 //    public List<Customer> findAll(CustomerSearchCriteria criteria) {
@@ -63,6 +70,5 @@ public class CustomerServiceImpl implements CustomerService {
 //    public void delete(Customer customer) {
 //        customerRepository.delete(customer);
 //    }
-
 
 }
