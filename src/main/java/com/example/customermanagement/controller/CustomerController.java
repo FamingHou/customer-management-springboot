@@ -37,7 +37,7 @@ public class CustomerController {
      * @param sortCriteria order by criteria
      * @return
      */
-    @GetMapping("/customers/columns")
+    @GetMapping("/customers/conditions")
     public Result<List<Customer>> getAllCustomersByColumns(Customer customer, SortCriteria sortCriteria) {
         return new Result<List<Customer>>(true, customerService.findByColumns(customer, sortCriteria));
     }

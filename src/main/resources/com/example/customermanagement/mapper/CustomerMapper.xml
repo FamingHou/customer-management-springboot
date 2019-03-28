@@ -9,8 +9,9 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.customermanagement.mapper.CustomerMapper">
-	
+<mapper
+	namespace="com.example.customermanagement.mapper.CustomerMapper">
+
 	<resultMap id="customerResultMap" type="Customer">
 		<id property="id" column="id" />
 		<result property="firstName" column="first_name" />
@@ -18,14 +19,26 @@
 		<result property="emailId" column="email_address" />
 		<result property="createdTime" column="created_time" />
 	</resultMap>
-	
-	<select id="selectCustomerById" resultType="Customer">
-		select * from
-		customer where id = #{id}
+
+	<select id="findByColumns" resultMap="customerResultMap">
+		select *
+		from customer where 1=1
+		<if test="c.firstName != null and c.firstName !=''">
+			and first_name=#{c.firstName} 
+		</if>
+		<if test="c.lastName != null and c.lastName !=''">
+			and last_name=#{c.lastName} 
+		</if>
+		<if test="c.emailId != null and c.emailId !=''">
+			and email_address=#{c.emailId} 
+		</if>
+		order by ${sc.sortColumn} ${sc.sortDirection}
 	</select>
 
 	<select id="findAll" resultMap="customerResultMap">
-		select * from customer order by ${sc.sortColumn} ${sc.sortDirection}
+		select *
+		from customer
+		order by ${sc.sortColumn} ${sc.sortDirection}
 	</select>
 
 </mapper>
