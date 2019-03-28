@@ -1,11 +1,11 @@
 package com.example.customermanagement.service;
 
-public class CustomerSearchCriteria {
+public class SortCriteria {
 
     private String sortColumn;
     private String sortDirection; // asc, desc
     
-    public CustomerSearchCriteria(String sortColumn, String sortDirection) {
+    public SortCriteria(String sortColumn, String sortDirection) {
         super();
         this.sortColumn = sortColumn;
         this.sortDirection = sortDirection;

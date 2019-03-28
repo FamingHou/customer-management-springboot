@@ -1,27 +1,21 @@
 package com.example.customermanagement.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.customermanagement.entity.Customer;
-import com.example.customermanagement.exception.ResourceNotFoundException;
 import com.example.customermanagement.exception.ValidationException;
 import com.example.customermanagement.model.Result;
-import com.example.customermanagement.service.CustomerSearchCriteria;
+import com.example.customermanagement.service.SortCriteria;
 import com.example.customermanagement.service.CustomerService;
 
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
@@ -32,7 +26,7 @@ public class CustomerController {
     private CustomerService customerService;
 
     @GetMapping("/customers")
-    public Result<List<Customer>> getAllCustomers(CustomerSearchCriteria criteria) {
+    public Result<List<Customer>> getAllCustomers(SortCriteria criteria) {
         
         return new Result<List<Customer>>(true, customerService.findAll(criteria));
     }
@@ -42,16 +36,17 @@ public class CustomerController {
 //            throws ResourceNotFoundException {
 //        return customerService.findById(customerId);
 //    }
-//
-//    @PostMapping("/customers")
-//    public Result createCustomer(@Valid @RequestBody Customer customer) {
-//        try {
-//            return new Result<Customer>(true, customerService.save(customer));
-//        } catch (ValidationException e) {
-//            return new Result<String>(false, e.getMessage());
-//        }
-//    }
-//
+
+    @PostMapping("/customers")
+    public Result createCustomer(@Valid @RequestBody Customer customer) {
+        try {
+            customerService.insert(customer);
+            return new Result<String>(true, "The customer is created successfully.");
+        } catch (ValidationException e) {
+            return new Result<String>(false, e.getMessage());
+        }
+    }
+
 //    @PutMapping("/customers/{id}")
 //    public Result updateCustomer(@PathVariable(value = "id") Long customerId,
 //            @Valid @RequestBody Customer customerDetails) throws ResourceNotFoundException {

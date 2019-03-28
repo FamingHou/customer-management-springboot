@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.customermanagement.entity.Customer;
+import com.example.customermanagement.exception.ValidationException;
 import com.example.customermanagement.mapper.CustomerMapper;
 
 @Service
@@ -15,8 +16,18 @@ public class CustomerServiceImpl implements CustomerService {
     private CustomerMapper customerMapper;
 
     @Override
-    public List<Customer> findAll(CustomerSearchCriteria criteria) {
+    public List<Customer> findAll(SortCriteria criteria) {
         return customerMapper.findAll(criteria);
+    }
+    
+    @Override
+    public void insert(Customer customer) throws ValidationException {
+      Customer found = customerMapper.findByEmailId(customer);
+      if (found != null) {
+          throw new ValidationException("This email address has already been registered.");
+      }
+      customer.setCreatedTime(System.currentTimeMillis()); // Unix Timestamp in milliseconds
+      customerMapper.insert(customer);
     }
 //
 //    @Override
@@ -52,5 +63,6 @@ public class CustomerServiceImpl implements CustomerService {
 //    public void delete(Customer customer) {
 //        customerRepository.delete(customer);
 //    }
+
 
 }
