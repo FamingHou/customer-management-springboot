@@ -19,10 +19,14 @@ public interface CustomerMapper {
     
     List<Customer> findByColumns(@Param("c") Customer c, @Param("sc") SortCriteria sc);
 
+    Customer findById(Long id);
+    
     Customer findByEmailId(Customer c);
 
     void insert(Customer customer);
 
     void updateStatus(Long id, String status);
+    
+    void delete(Long id);
     
 }

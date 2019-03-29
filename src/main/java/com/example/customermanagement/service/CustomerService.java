@@ -13,12 +13,14 @@ public interface CustomerService {
 
     List<Customer> findAll(SortCriteria sortCriteria);
 
-//    Customer findById(Long id) throws ResourceNotFoundException;
+    Customer findById(Long id) throws ResourceNotFoundException;
 
     void insert(Customer customer) throws ValidationException;
+    
+    void update(Customer customer) throws ValidationException;
 
     void updateStatus(Long id, String status);
 
-//    void delete(Customer customer);
+    void delete(Long customerId);
 
 }

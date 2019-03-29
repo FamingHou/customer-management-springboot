@@ -21,6 +21,18 @@
 		<result property="status" column="status" />
 	</resultMap>
 
+	<select id="findByEmailId" resultMap="customerResultMap">
+		select *
+		from customer
+		where email_address=#{emailId}
+	</select>
+
+	<select id="findById" resultMap="customerResultMap">
+		select *
+		from customer
+		where id=#{id}
+	</select>
+
 	<select id="findByColumns" resultMap="customerResultMap">
 		select *
 		from customer where 1=1
@@ -49,4 +61,23 @@
 		where id = #{id}
 	</update>
 
+	<update id="update">
+		update customer set
+		first_name = #{firstName},
+		last_name = #{lastName},
+		email_address = #{emailId},
+		status = #{status}
+		where id = #{id}
+	</update>
+	
+	<insert id="insert">
+		insert into customer (first_name, last_name, email_address, status,
+		created_time)
+		values (#{firstName}, #{lastName}, #{emailId}, #{status}, #{createdTime})
+	</insert>
+	
+	<delete id="delete">
+	    delete from customer where id = #{id}
+	</delete>
+	
 </mapper>

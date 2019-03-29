@@ -28,7 +28,7 @@ public class CustomerControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    @MockBean
+    @Autowired
     private CustomerService customerService;
     
     @Test

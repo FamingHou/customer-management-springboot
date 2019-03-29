@@ -6,74 +6,54 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.customermanagement.entity.Customer;
+import com.example.customermanagement.exception.ResourceNotFoundException;
 import com.example.customermanagement.exception.ValidationException;
 import com.example.customermanagement.mapper.CustomerMapper;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
 
-    @Autowired
-    private CustomerMapper customerMapper;
+	@Autowired
+	private CustomerMapper customerMapper;
 
-    @Override
-    public List<Customer> findAll(SortCriteria sortCriteria) {
-        return customerMapper.findAll(sortCriteria);
-    }
+	@Override
+	public List<Customer> findAll(SortCriteria sortCriteria) {
+		return customerMapper.findAll(sortCriteria);
+	}
 
-    @Override
-    public List<Customer> findByColumns(Customer customer, SortCriteria sortCriteria) {
-        return customerMapper.findByColumns(customer, sortCriteria);
-    }
+	@Override
+	public List<Customer> findByColumns(Customer customer, SortCriteria sortCriteria) {
+		return customerMapper.findByColumns(customer, sortCriteria);
+	}
 
-    @Override
-    public void insert(Customer customer) throws ValidationException {
-        Customer found = customerMapper.findByEmailId(customer);
-        if (found != null) {
-            throw new ValidationException("This email address has already been registered.");
-        }
-        customer.setCreatedTime(System.currentTimeMillis()); // Unix Timestamp in milliseconds
-        customerMapper.insert(customer);
-    }
+	@Override
+	public Customer findById(Long id) throws ResourceNotFoundException {
+		return customerMapper.findById(id);
+	}
 
-    @Override
-    public void updateStatus(Long id, String status) {
-        customerMapper.updateStatus(id, status);        
-    }
+	@Override
+	public void insert(Customer customer) throws ValidationException {
+		Customer found = customerMapper.findByEmailId(customer);
+		if (found != null) {
+			throw new ValidationException("This email address has already been registered.");
+		}
+		customer.setCreatedTime(System.currentTimeMillis()); // Unix Timestamp in milliseconds
+		customerMapper.insert(customer);
+	}
 
-    
-//
-//    @Override
-//    public List<Customer> findAll(CustomerSearchCriteria criteria) {
-//        Direction direction = Sort.Direction.ASC;
-//        String sortColumn = "Id";
-//        if (criteria != null && criteria.getSortDirection() != null && criteria.getSortColumn() != null) {
-//            direction = criteria.getSortDirection().equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC;
-//            sortColumn = criteria.getSortColumn();
-//        }
-//
-//        Sort sort = new Sort(direction, sortColumn);
-//        return customerRepository.findAll(sort);
-//    }
-//
-//    @Override
-//    public Customer findById(Long id) throws ResourceNotFoundException {
-//        return customerRepository.findById(id)
-//                .orElseThrow(() -> new ResourceNotFoundException("Customer not found for the id: " + id));
-//    }
-//
-//    @Override
-//    public Customer save(@Valid Customer customer) throws ValidationException {
-//        Customer result = customerRepository.findByEmailId(customer.getEmailId());
-//        if (result != null) {
-//            throw new ValidationException("This email address has already been registered.");
-//        }
-//        customer.setCreatedTime(System.currentTimeMillis()); // Unix Timestamp in milliseconds
-//        return customerRepository.save(customer);
-//    }
-//
-//    @Override
-//    public void delete(Customer customer) {
-//        customerRepository.delete(customer);
-//    }
+	@Override
+	public void updateStatus(Long id, String status) {
+		customerMapper.updateStatus(id, status);
+	}
+
+	@Override
+	public void delete(Long id) {
+		customerMapper.delete(id);
+	}
+
+	@Override
+	public void update(Customer customer) throws ValidationException {
+		// TODO Auto-generated method stub
+	}
 
 }
