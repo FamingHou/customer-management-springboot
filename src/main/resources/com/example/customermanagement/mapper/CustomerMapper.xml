@@ -36,13 +36,13 @@
 	<select id="findByColumns" resultMap="customerResultMap">
 		select *
 		from customer where 1=1
-		<if test="c.firstName != null and c.firstName !=''">
+		<if test="c.firstName != null and c.firstName !='' and c.firstName !='null' and c.firstName != 'undefined'">
 			and first_name=#{c.firstName}
 		</if>
-		<if test="c.lastName != null and c.lastName !=''">
+		<if test="c.lastName != null and c.lastName !='' and c.lastName !='null' and c.lastName != 'undefined'">
 			and last_name=#{c.lastName}
 		</if>
-		<if test="c.emailId != null and c.emailId !=''">
+		<if test="c.emailId != null and c.emailId !='' and c.emailId !='null' and c.emailId != 'undefined'">
 			and email_address=#{c.emailId}
 		</if>
 		order by ${sc.sortColumn} ${sc.sortDirection}
